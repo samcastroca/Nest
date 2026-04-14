@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prometeus"
+version = "0.1.0"
+description = "CLI tool to automatically organize files by extension, date, name, or custom rules"
+requires-python = ">=3.10"
+dependencies = [
+    "typer[all]>=0.12",
+    "watchdog>=4.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+prometeus = "prometeus.cli:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-mock>=3.14"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["prometeus"]

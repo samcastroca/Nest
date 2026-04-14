@@ -1,0 +1,34 @@
+# Prometeus — example custom rules
+# Usage: prometeus sort ~/Downloads --config example_rules.yaml
+#
+# Rules are evaluated in order; the first match wins.
+# If --by extension|date is also given, it acts as a fallback for unmatched files.
+#
+# Fields:
+#   name:        Human-readable label (shown in logs)
+#   pattern:     Glob matched against the filename  (e.g. "*.pdf", "Screenshot*")
+#   match:       Optional regex applied to the filename (case-insensitive)
+#                The rule fires only when BOTH pattern AND match succeed.
+#   destination: Target subdirectory, relative to the source folder
+
+rules:
+  - name: "Facturas / Invoices"
+    pattern: "*.pdf"
+    match: "factura|invoice|recibo|receipt"
+    destination: "Facturas/"
+
+  - name: "Screenshots"
+    pattern: "Screenshot*.png"
+    destination: "Capturas/Screenshots"
+
+  - name: "Datasets CSV"
+    pattern: "*.csv"
+    destination: "Datasets/"
+
+  - name: "Jupyter notebooks"
+    pattern: "*.ipynb"
+    destination: "Notebooks/"
+
+  - name: "ZIP backups"
+    pattern: "backup_*.zip"
+    destination: "Backups/"
