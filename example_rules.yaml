@@ -1,5 +1,5 @@
-# Prometeus — example custom rules
-# Usage: prometeus sort ~/Downloads --config example_rules.yaml
+# Nest — example custom rules
+# Usage: nest sort ~/Downloads --config example_rules.yaml
 #
 # Rules are evaluated in order; the first match wins.
 # If --by extension|date is also given, it acts as a fallback for unmatched files.

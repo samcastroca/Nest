@@ -1,7 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 
-from prometeus.rules.base import Rule
+from nest.rules.base import Rule
 
 
 class ByDateRule(Rule):

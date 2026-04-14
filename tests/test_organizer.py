@@ -3,9 +3,9 @@ from pathlib import Path
 
 import pytest
 
-from prometeus.organizer import organize
-from prometeus.rules.by_extension import ByExtensionRule
-from prometeus.rules.by_date import ByDateRule
+from nest.organizer import organize
+from nest.rules.by_extension import ByExtensionRule
+from nest.rules.by_date import ByDateRule
 
 
 class TestOrganize:

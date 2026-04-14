@@ -1,11 +1,11 @@
-"""Configuration loading for Prometeus."""
+"""Configuration loading for Nest."""
 from __future__ import annotations
 
 from pathlib import Path
 
 import yaml
 
-from prometeus.rules.custom import CustomRule
+from nest.rules.custom import CustomRule
 
 
 def load_custom_rules(config_path: Path) -> CustomRule:
@@ -16,7 +16,7 @@ def load_custom_rules(config_path: Path) -> CustomRule:
 
 
 EXAMPLE_CONFIG = """\
-# Prometeus custom rules
+# Nest custom rules
 # Rules are evaluated in order; the first match wins.
 #
 # Fields:

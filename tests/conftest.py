@@ -1,4 +1,4 @@
-"""Shared fixtures for Prometeus tests."""
+"""Shared fixtures for Nest tests."""
 from pathlib import Path
 
 import pytest

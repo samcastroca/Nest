@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**Prometeus** is a Python CLI tool that organizes files by extension, date, or user-defined rules. It supports one-shot sorting and real-time folder watching.
+**Nest** is a Python CLI tool that organizes files by extension, date, or user-defined rules. It supports one-shot sorting and real-time folder watching.
 
 ## Setup & Commands
 
@@ -13,12 +13,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -e ".[dev]"
 
 # Run the CLI
-prometeus --help
-prometeus sort ~/Downloads --by extension --dry-run
-prometeus sort ~/Downloads --by date --format "%Y/%m"
-prometeus sort ~/Downloads --config rules.yaml --by extension
-prometeus watch ~/Downloads --by extension
-prometeus config init --output rules.yaml
+nest --help
+nest sort ~/Downloads --by extension --dry-run
+nest sort ~/Downloads --by date --format "%Y/%m"
+nest sort ~/Downloads --config rules.yaml --by extension
+nest watch ~/Downloads --by extension
+nest config init --output rules.yaml
 
 # Run all tests
 pytest tests/ -v
@@ -33,7 +33,7 @@ pytest tests/test_organizer.py::TestOrganize::test_dry_run_moves_nothing -v
 ## Architecture
 
 ```
-prometeus/
+nest/
 ├── cli.py          # Typer entry point — commands: sort, watch, config init
 ├── organizer.py    # organize() engine: iterates files, applies rules, moves files
 ├── conflict.py     # Interactive conflict resolution (skip/overwrite/rename/all)

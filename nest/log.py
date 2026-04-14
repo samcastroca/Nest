@@ -1,6 +1,6 @@
 """Session log — records every file move so they can be undone later.
 
-The log is stored as ``.prometeus_log.json`` inside the source directory.
+The log is stored as ``.nest_log.json`` inside the source directory.
 
 Log format::
 
@@ -26,7 +26,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
-LOG_FILENAME = ".prometeus_log.json"
+LOG_FILENAME = ".nest_log.json"
 
 
 # ---------------------------------------------------------------------------

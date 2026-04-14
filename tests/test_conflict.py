@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-import prometeus.conflict as conflict_mod
-from prometeus.conflict import resolve_raw, _auto_rename
+import nest.conflict as conflict_mod
+from nest.conflict import resolve_raw, _auto_rename
 
 
 class TestAutoRename:

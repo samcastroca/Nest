@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from prometeus.log import (
+from nest.log import (
     LOG_FILENAME,
     new_session_id,
     record_session,

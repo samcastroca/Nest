@@ -9,9 +9,9 @@ from typing import Sequence
 from rich.console import Console
 from rich.table import Table
 
-from prometeus.rules.base import Rule
-import prometeus.conflict as conflict_mod
-import prometeus.log as log_mod
+from nest.rules.base import Rule
+import nest.conflict as conflict_mod
+import nest.log as log_mod
 
 console = Console()
 
@@ -49,7 +49,7 @@ def organize(
 
     Args:
         source_dir:   Directory to scan.
-        rules:        Ordered list of :class:`~prometeus.rules.base.Rule`.
+        rules:        Ordered list of :class:`~nest.rules.base.Rule`.
                       First match wins.
         dry_run:      If ``True``, print planned moves without touching disk.
         recursive:    Descend into subdirectories.

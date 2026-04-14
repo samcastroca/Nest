@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from prometeus.rules.base import Rule
+from nest.rules.base import Rule
 
 # Default extension → category mapping.
 # Keys are folder names; values are sets of lowercase extensions (no dot).

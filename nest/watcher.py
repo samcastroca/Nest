@@ -9,10 +9,10 @@ from rich.console import Console
 from watchdog.events import FileCreatedEvent, FileMovedEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 
-from prometeus.rules.base import Rule
-from prometeus.organizer import _first_match
+from nest.rules.base import Rule
+from nest.organizer import _first_match
 import shutil
-import prometeus.conflict as conflict_mod
+import nest.conflict as conflict_mod
 
 console = Console()
 

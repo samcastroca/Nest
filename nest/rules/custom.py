@@ -19,7 +19,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from prometeus.rules.base import Rule
+from nest.rules.base import Rule
 
 
 @dataclass

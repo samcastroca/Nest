@@ -1,4 +1,4 @@
-"""Prometeus CLI — entry point."""
+"""Nest CLI — entry point."""
 from __future__ import annotations
 
 from enum import Enum
@@ -9,11 +9,11 @@ import typer
 from rich.console import Console
 
 app = typer.Typer(
-    name="prometeus",
+    name="nest",
     help="Organize files by extension, date, name, or custom rules.",
     add_completion=True,
 )
-config_app = typer.Typer(help="Manage Prometeus configuration.")
+config_app = typer.Typer(help="Manage Nest configuration.")
 app.add_typer(config_app, name="config")
 
 console = Console()
@@ -64,11 +64,11 @@ def sort(
     )] = False,
 ) -> None:
     """Organize files in PATH according to the chosen strategy."""
-    from prometeus.rules.base import Rule
-    from prometeus.rules.by_extension import ByExtensionRule
-    from prometeus.rules.by_date import ByDateRule
-    from prometeus.config import load_custom_rules
-    from prometeus.organizer import organize
+    from nest.rules.base import Rule
+    from nest.rules.by_extension import ByExtensionRule
+    from nest.rules.by_date import ByDateRule
+    from nest.config import load_custom_rules
+    from nest.organizer import organize
 
     rules: list[Rule] = []
 
@@ -125,11 +125,11 @@ def watch(
     )] = DateUse.mtime,
 ) -> None:
     """Watch PATH and organize new files automatically. Press Ctrl+C to stop."""
-    from prometeus.rules.base import Rule
-    from prometeus.rules.by_extension import ByExtensionRule
-    from prometeus.rules.by_date import ByDateRule
-    from prometeus.config import load_custom_rules
-    from prometeus.watcher import start_watcher
+    from nest.rules.base import Rule
+    from nest.rules.by_extension import ByExtensionRule
+    from nest.rules.by_date import ByDateRule
+    from nest.config import load_custom_rules
+    from nest.watcher import start_watcher
 
     rules: list[Rule] = []
 
@@ -174,7 +174,7 @@ def undo(
     """Restore files to their original locations using the session log."""
     import shutil
     from rich.table import Table
-    from prometeus.log import list_sessions as get_sessions, get_session, remove_session, LOG_FILENAME
+    from nest.log import list_sessions as get_sessions, get_session, remove_session, LOG_FILENAME
 
     sessions = get_sessions(path)
 
@@ -248,7 +248,7 @@ def config_init(
     )] = Path("rules.yaml"),
 ) -> None:
     """Generate an example rules.yaml config file."""
-    from prometeus.config import EXAMPLE_CONFIG
+    from nest.config import EXAMPLE_CONFIG
 
     if output.exists():
         overwrite = typer.confirm(f"{output} already exists. Overwrite?", default=False)
@@ -257,4 +257,4 @@ def config_init(
 
     output.write_text(EXAMPLE_CONFIG, encoding="utf-8")
     console.print(f"[green]Created[/green] {output}")
-    console.print("[dim]Edit the file and use it with: prometeus sort <path> --config rules.yaml[/dim]")
+    console.print("[dim]Edit the file and use it with: nest sort <path> --config rules.yaml[/dim]")

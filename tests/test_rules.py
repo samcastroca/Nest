@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from prometeus.rules.by_extension import ByExtensionRule
-from prometeus.rules.by_date import ByDateRule
-from prometeus.rules.custom import CustomRule, RuleSpec
+from nest.rules.by_extension import ByExtensionRule
+from nest.rules.by_date import ByDateRule
+from nest.rules.custom import CustomRule, RuleSpec
 
 
 # ---------------------------------------------------------------------------

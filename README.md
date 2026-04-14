@@ -1,12 +1,12 @@
-# Prometeus
+# Nest
 
 CLI tool to automatically organize files by extension, date, or custom rules.
 
 ## Installation
 
 ```bash
-git clone https://github.com/samcastroca/prometeus.git
-cd prometeus
+git clone https://github.com/samcastroca/nest.git
+cd nest
 pip install -e .
 ```
 
@@ -15,7 +15,7 @@ pip install -e .
 ### `sort` — organize a folder
 
 ```bash
-prometeus sort <path> [options]
+nest sort <path> [options]
 ```
 
 | Option | Description |
@@ -33,21 +33,21 @@ prometeus sort <path> [options]
 
 ```bash
 # Preview what would happen
-prometeus sort ~/Downloads --by extension --dry-run
+nest sort ~/Downloads --by extension --dry-run
 
 # Organize by file type
-prometeus sort ~/Downloads --by extension
+nest sort ~/Downloads --by extension
 
 # Organize by year/month
-prometeus sort ~/Downloads --by date --format "%Y/%m"
+nest sort ~/Downloads --by date --format "%Y/%m"
 
 # Custom rules with extension fallback
-prometeus sort ~/Downloads --config rules.yaml --by extension
+nest sort ~/Downloads --config rules.yaml --by extension
 ```
 
 #### Conflict resolution
 
-When a file already exists at the destination, Prometeus prompts:
+When a file already exists at the destination, Nest prompts:
 
 ```
 [s] Skip  [o] Overwrite  [r] Rename  [A] All-rename  [S] All-skip  [q] Quit
@@ -57,20 +57,20 @@ When a file already exists at the destination, Prometeus prompts:
 
 ### `undo` — restore files from a previous session
 
-Every `sort` run records a session log (`.prometeus_log.json`) inside the organized folder. Use `undo` to reverse any of those sessions.
+Every `sort` run records a session log (`.nest_log.json`) inside the organized folder. Use `undo` to reverse any of those sessions.
 
 ```bash
 # Undo the most recent session
-prometeus undo ~/Downloads
+nest undo ~/Downloads
 
 # Preview what would be restored without moving anything
-prometeus undo ~/Downloads --dry-run
+nest undo ~/Downloads --dry-run
 
 # List all recorded sessions
-prometeus undo ~/Downloads --list
+nest undo ~/Downloads --list
 
 # Undo a specific session by ID
-prometeus undo ~/Downloads --session 20240315_103045_a1b2c3
+nest undo ~/Downloads --session 20240315_103045_a1b2c3
 ```
 
 The session entry is removed from the log after a successful undo.
@@ -82,12 +82,12 @@ The session entry is removed from the log after a successful undo.
 Organizes new files automatically as they appear. Press `Ctrl+C` to stop.
 
 ```bash
-prometeus watch <path> [--by extension|date] [--config rules.yaml]
+nest watch <path> [--by extension|date] [--config rules.yaml]
 ```
 
 ```bash
-prometeus watch ~/Downloads --by extension
-prometeus watch ~/Downloads --config rules.yaml --by date
+nest watch ~/Downloads --by extension
+nest watch ~/Downloads --config rules.yaml --by date
 ```
 
 ---
@@ -95,7 +95,7 @@ prometeus watch ~/Downloads --config rules.yaml --by date
 ### `config init` — generate an example rules file
 
 ```bash
-prometeus config init --output rules.yaml
+nest config init --output rules.yaml
 ```
 
 ---
@@ -123,7 +123,7 @@ rules:
 ```
 
 ```bash
-prometeus sort ~/Downloads --config rules.yaml
+nest sort ~/Downloads --config rules.yaml
 ```
 
 ---
