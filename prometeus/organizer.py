@@ -11,6 +11,7 @@ from rich.table import Table
 
 from prometeus.rules.base import Rule
 import prometeus.conflict as conflict_mod
+import prometeus.log as log_mod
 
 console = Console()
 
@@ -59,11 +60,15 @@ def organize(
     report = OrganizeReport()
 
     pattern = "**/*" if recursive else "*"
-    files = [f for f in source_dir.glob(pattern) if f.is_file()]
+    files = [f for f in source_dir.glob(pattern) if f.is_file()
+             if f.name != log_mod.LOG_FILENAME]
 
     if dry_run:
         _print_dry_run(source_dir, files, rules)
         return report
+
+    session_id = log_mod.new_session_id()
+    completed_moves: list[tuple[Path, Path]] = []
 
     for file in files:
         dest_rel = _first_match(file, rules)
@@ -90,11 +95,16 @@ def organize(
             shutil.move(str(file), str(final_dest))
             result = MoveResult(source=file, destination=final_dest, conflict=(final_dest != dest_abs))
             report.moved.append(result)
+            completed_moves.append((file, final_dest))
             console.print(f"  [green]moved[/green]   {file.name} → {final_dest.relative_to(source_dir)}")
         except OSError as exc:
             result = MoveResult(source=file, destination=None, error=str(exc))
             report.errors.append(result)
             console.print(f"  [red]error[/red]   {file.name}: {exc}")
+
+    if completed_moves:
+        log_mod.record_session(source_dir, session_id, completed_moves)
+        console.print(f"[dim]Session logged as {session_id}[/dim]")
 
     _print_summary(report)
     return report

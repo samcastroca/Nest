@@ -150,6 +150,93 @@ def watch(
 
 
 # ---------------------------------------------------------------------------
+# undo
+# ---------------------------------------------------------------------------
+
+@app.command()
+def undo(
+    path: Annotated[Path, typer.Argument(
+        help="Directory that was previously organized.",
+        exists=True, file_okay=False, resolve_path=True,
+    )],
+    session: Annotated[Optional[str], typer.Option(
+        "--session", "-s",
+        help="Session ID to undo (defaults to the most recent session).",
+    )] = None,
+    list_sessions: Annotated[bool, typer.Option(
+        "--list", "-l",
+        help="List all available sessions without undoing anything.",
+    )] = False,
+    dry_run: Annotated[bool, typer.Option(
+        "--dry-run", help="Preview what would be restored without moving files.",
+    )] = False,
+) -> None:
+    """Restore files to their original locations using the session log."""
+    import shutil
+    from rich.table import Table
+    from prometeus.log import list_sessions as get_sessions, get_session, remove_session, LOG_FILENAME
+
+    sessions = get_sessions(path)
+
+    if list_sessions:
+        if not sessions:
+            console.print("[yellow]No sessions recorded for this directory.[/yellow]")
+            raise typer.Exit()
+        table = Table(title=f"Sessions — {path}", show_lines=False)
+        table.add_column("ID", style="cyan")
+        table.add_column("Timestamp")
+        table.add_column("Files moved", justify="right")
+        for s in sessions:
+            table.add_row(s["id"], s["timestamp"], str(len(s["moves"])))
+        console.print(table)
+        return
+
+    if not sessions:
+        console.print("[yellow]No sessions recorded for this directory.[/yellow]")
+        raise typer.Exit(1)
+
+    target_id = session or sessions[0]["id"]
+    target = get_session(path, target_id)
+    if target is None:
+        console.print(f"[red]Session {target_id!r} not found.[/red]")
+        raise typer.Exit(1)
+
+    console.print(f"Undoing session [cyan]{target_id}[/cyan] ({target['timestamp']}) — "
+                  f"{len(target['moves'])} file(s)")
+
+    errors = 0
+    restored = 0
+    for entry in reversed(target["moves"]):
+        src = path / entry["to"]    # where the file is now
+        dst = path / entry["from"]  # where it should go back
+
+        if not src.exists():
+            console.print(f"  [yellow]missing[/yellow] {entry['to']} — skipped")
+            continue
+
+        if dry_run:
+            console.print(f"  [dim]would restore[/dim] {entry['to']} → {entry['from']}")
+            continue
+
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.move(str(src), str(dst))
+            console.print(f"  [green]restored[/green] {entry['to']} → {entry['from']}")
+            restored += 1
+        except OSError as exc:
+            console.print(f"  [red]error[/red]    {entry['to']}: {exc}")
+            errors += 1
+
+    if not dry_run:
+        if errors == 0:
+            remove_session(path, target_id)
+        console.print(
+            f"\n[bold]Done.[/bold] "
+            f"Restored: [green]{restored}[/green]  Errors: [red]{errors}[/red]"
+        )
+
+
+# ---------------------------------------------------------------------------
 # config init
 # ---------------------------------------------------------------------------
 

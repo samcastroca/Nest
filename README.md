@@ -55,6 +55,28 @@ When a file already exists at the destination, Prometeus prompts:
 
 ---
 
+### `undo` — restore files from a previous session
+
+Every `sort` run records a session log (`.prometeus_log.json`) inside the organized folder. Use `undo` to reverse any of those sessions.
+
+```bash
+# Undo the most recent session
+prometeus undo ~/Downloads
+
+# Preview what would be restored without moving anything
+prometeus undo ~/Downloads --dry-run
+
+# List all recorded sessions
+prometeus undo ~/Downloads --list
+
+# Undo a specific session by ID
+prometeus undo ~/Downloads --session 20240315_103045_a1b2c3
+```
+
+The session entry is removed from the log after a successful undo.
+
+---
+
 ### `watch` — monitor a folder in real time
 
 Organizes new files automatically as they appear. Press `Ctrl+C` to stop.
